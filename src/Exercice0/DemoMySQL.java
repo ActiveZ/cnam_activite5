@@ -23,6 +23,7 @@ import java.sql.Statement;
         private Connection ct;
         private Statement st;
 
+        //pas besoin de préciser le port
         private String url = "jdbc:mysql://localhost/java_cnam"; // url de la base
         private String login = "root"; // login de connexion à la base
         private String pwd = ""; // mot de passe de connexion à la base
@@ -34,7 +35,7 @@ import java.sql.Statement;
         public DemoMySQL() {
             try {
                 // Chargement du driver
-                //Class.forName("com.mysql.jdbc.Driver");
+                //Class.forName("com.mysql.jdbc.Driver"); // driver obsolète
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 // Récupération de la connexion
                 ct = DriverManager.getConnection(url,login,pwd);
