@@ -57,8 +57,9 @@ import java.sql.Statement;
          * Ajoute une personne dans la table matable
          */
         public void add(String personne) {
-            //String sql = "INSERT INTO 'matable' ('personne') VALUES ('"+personne+"')";
-            String sql = "INSERT INTO matable (personne, taille) VALUES ('moi', 120)";
+            //String sql = "INSERT INTO 'matable' ('personne') VALUES ('"+personne+"')"; //trop de quotes
+            //String sql = "INSERT INTO matable (personne, taille) VALUES ('moi', 120)";
+            String sql = "INSERT INTO matable (personne) VALUES ('"+personne+"')";
             try {
                 // exécute la requête
                 st.executeUpdate(sql);
