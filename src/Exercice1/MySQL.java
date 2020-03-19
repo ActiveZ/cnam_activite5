@@ -115,15 +115,12 @@ public class MySQL {
             // exécute la requête
             ResultSet rs = st.executeQuery(sql);
             // parcours des résultats
-            //System.out.println("Affichage des employés de la catégorie " + cat + ":");
             int idPromu = 0, categorie = 0;
             String nom = "";
             while (rs.next()) {
                 idPromu = rs.getInt("Id");
                 nom = rs.getString("Nom");
                 categorie =  rs.getInt("Categorie");
-
-                //int salaire = rs.getInt("Salaire");
             }
             if (categorie < 4) {
                 categorie++;
@@ -138,9 +135,6 @@ public class MySQL {
             e.printStackTrace();
         }
     }
-
-
-
 
     /**
      * ferme la connextion à la base de données
