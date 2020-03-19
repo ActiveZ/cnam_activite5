@@ -44,9 +44,7 @@ public class MySQL {
      * Ajoute une personne dans la table Employe
      */
     public void add(String nom, int categorie, int salaire) {
-        //String sql = "INSERT INTO Employe (Nom, Categorie, Salaire) VALUES ('"+nom+"', '"+categorie+"', '"+salaire+"')";
-        //String sql = "INSERT INTO Employe (Nom, Categorie, Salaire) VALUES ('"+nom+"', 1, 2000)";
-        String sql = "INSERT INTO Employe (Nom, Categorie, Salaire) VALUES ('moi', 1, 2000)";
+        String sql = "INSERT INTO Employe (Nom, Categorie, Salaire) VALUES ('"+nom+"', '"+categorie+"', '"+salaire+"')";
         try {
             // exécute la requête
             st.executeUpdate(sql);

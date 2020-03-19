@@ -10,7 +10,7 @@ public class Launch {
         bdd.vide();
 
         // ajouter des enregistrements
-        //peupleBdd(bdd);
+        peupleBdd(bdd);
 
         // lire tous les enregistrements
         bdd.lire();
@@ -38,8 +38,6 @@ public class Launch {
                 cat=1;
                 sal = 2000;
             }
-//            String query = "update spr_producto set borrado='"+sal+"'";
-//            query += ", usuario_responsable='" + cat + "'";
             bdd.add("Nom"+i, cat, sal);
         }
     }
