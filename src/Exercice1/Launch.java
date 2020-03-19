@@ -1,8 +1,12 @@
 package Exercice1;
 
+import java.util.Scanner;
+
 public class Launch {
 
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
         // créer la connexion
         MySQL bdd = new MySQL();
 
@@ -14,6 +18,11 @@ public class Launch {
 
         // lire tous les enregistrements
         bdd.lire();
+
+        // trier les employés par catégorie
+        System.out.print("Choisissez une catégorie d'employés à afficher (1-4):");
+        int choix = sc.nextInt();
+        if (choix > 0 && choix < 5) { bdd.triCategorie(choix);}
 
         // fermer la connexion
         bdd.close();

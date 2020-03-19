@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class MySQL {
 
-
+    private final String ligne = "---------------------------------------";
     // ---------------------------------------
     // ---------- Attributs ------------------
     // ---------------------------------------
@@ -62,12 +62,15 @@ public class MySQL {
             // exécute la requête
             ResultSet rs = st.executeQuery(sql);
             // parcours des résultats
+            System.out.println("Affichage des données de la table 'Employe':");
             while (rs.next()) {
-                System.out.println(rs.getInt("Id"));
-                System.out.println(rs.getString("Nom"));
-                System.out.println(rs.getInt("Categorie"));
-                System.out.println(rs.getInt("Salaire"));
+                //System.out.println(rs.getInt("Id"));
+                String nom = rs.getString("Nom");
+                int categorie =  rs.getInt("Categorie");
+                int salaire = rs.getInt("Salaire");
+                System.out.println("Nom: " + nom + "   Catégorie: " + categorie + "   Salaire: " + salaire);
             }
+            System.out.println(ligne);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -85,6 +88,30 @@ public class MySQL {
             e.printStackTrace();
         }
     }
+
+    public void triCategorie(int cat) {
+        String sql = "SELECT * FROM Employe WHERE Categorie = '"+cat+"'";
+        try {
+            // exécute la requête
+            ResultSet rs = st.executeQuery(sql);
+            // parcours des résultats
+            System.out.println("Affichage des employés de la catégorie " + cat + ":");
+            while (rs.next()) {
+                //System.out.println(rs.getInt("Id"));
+                String nom = rs.getString("Nom");
+                int categorie =  rs.getInt("Categorie");
+                int salaire = rs.getInt("Salaire");
+                System.out.println("Nom: " + nom + "   Catégorie: " + categorie + "   Salaire: " + salaire);
+            }
+            System.out.println(ligne);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
 
     /**
      * ferme la connextion à la base de données
