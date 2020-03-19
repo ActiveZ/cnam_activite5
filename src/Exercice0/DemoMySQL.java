@@ -26,7 +26,7 @@ import java.sql.Statement;
         //pas besoin de préciser le port
         private String url = "jdbc:mysql://localhost/java_cnam"; // url de la base
         private String login = "root"; // login de connexion à la base
-        private String pwd = ""; // mot de passe de connexion à la base
+        private String pwd = ""; // mot de passe de connexion à ljava_a base
 
         // ---------------------------------------
         // ---------- Constructeurs --------------
@@ -57,7 +57,7 @@ import java.sql.Statement;
          * Ajoute une personne dans la table matable
          */
         public void add(String personne) {
-            //String sql = "INSERT INTO 'matable' ('personne') VALUES ('"+personne+"')"; //trop de quotes
+            //String sql = "INSERT INTO 'matable' ('personne') VALUES ('"+personne+"')"; //trop de quotes ?
             //String sql = "INSERT INTO matable (personne, taille) VALUES ('moi', 120)";
             String sql = "INSERT INTO matable (personne) VALUES ('"+personne+"')";
             try {
