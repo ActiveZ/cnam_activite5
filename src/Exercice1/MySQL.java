@@ -107,7 +107,36 @@ public class MySQL {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
+    public void promotion(String nomPromu) {
+        String sql = "SELECT * FROM Employe WHERE Nom = '"+nomPromu+"'";
+        try {
+            // exécute la requête
+            ResultSet rs = st.executeQuery(sql);
+            // parcours des résultats
+            //System.out.println("Affichage des employés de la catégorie " + cat + ":");
+            int idPromu = 0, categorie = 0;
+            String nom = "";
+            while (rs.next()) {
+                idPromu = rs.getInt("Id");
+                nom = rs.getString("Nom");
+                categorie =  rs.getInt("Categorie");
+
+                //int salaire = rs.getInt("Salaire");
+            }
+            if (categorie < 4) {
+                categorie++;
+                sql = "UPDATE Employe SET Categorie = '"+categorie+"' WHERE Id = '"+idPromu+"' ";
+                //requete retourne 1 si réussie, 0 sinon
+                if (st.executeUpdate(sql)==1) {
+                    System.out.println(nom + " est maintenant en catégorie " + categorie);
+                }
+            }
+            System.out.println(ligne);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 

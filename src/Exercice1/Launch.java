@@ -22,7 +22,15 @@ public class Launch {
         // trier les employés par catégorie
         System.out.print("Choisissez une catégorie d'employés à afficher (1-4):");
         int choix = sc.nextInt();
-        if (choix > 0 && choix < 5) { bdd.triCategorie(choix);}
+        if (choix > 0 && choix < 5) {
+            bdd.triCategorie(choix);
+            sc.nextLine();
+        }
+
+        // promouvoir un employé à la catégorie + 1
+        System.out.print("Nom de l'employé à promouvoir: ");
+        String nomPromu = sc.nextLine();
+        bdd.promotion(nomPromu);
 
         // fermer la connexion
         bdd.close();
