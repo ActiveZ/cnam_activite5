@@ -4,7 +4,6 @@ import java.sql.*;
 
 public class MySQL {
 
-    private final String ligne = "---------------------------------------";
     // ---------------------------------------
     // ---------- Attributs ------------------
     // ---------------------------------------
@@ -40,61 +39,23 @@ public class MySQL {
     // ---------------------------------------
 
     /**
-     * @param nom, categorie, salaire  à ajouter
-     * Ajoute une personne dans la table Employe
+     * Calcul des impôts selon les requêtes sql adaptées aux tables
      */
-    public void add(String nom, int categorie, int salaire) {
-        String sql = "INSERT INTO Employe (Nom, Categorie, Salaire) VALUES ('"+nom+"', '"+categorie+"', '"+salaire+"')";
-        try {
-            // exécute la requête
-            st.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Lit et affiche tous les enregistrements de la table Employe
-     */
-    public void lire() {
-        String sql = "SELECT * FROM Employe";
+    public double calculImpots(String sql) {
         try {
             // exécute la requête
             ResultSet rs = st.executeQuery(sql);
-            // parcours des résultats
-            System.out.println("Affichage des données de la table 'Employe':");
+            double result=0;
             while (rs.next()) {
-                //System.out.println(rs.getInt("Id"));
-                String nom = rs.getString("Nom");
-                int categorie =  rs.getInt("Categorie");
-                int salaire = rs.getInt("Salaire");
-                System.out.println("Nom: " + nom + "   Catégorie: " + categorie + "   Salaire: " + salaire);
+                result = rs.getDouble("impot");
             }
-            System.out.println(ligne);
+            return result;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return 0;
     }
 
-    public void triCategorie(int cat) {
-        String sql = "SELECT * FROM Employe WHERE Categorie = '"+cat+"'";
-        try {
-            // exécute la requête
-            ResultSet rs = st.executeQuery(sql);
-            // parcours des résultats
-            System.out.println("Affichage des employés de la catégorie " + cat + ":");
-            while (rs.next()) {
-                //System.out.println(rs.getInt("Id"));
-                String nom = rs.getString("Nom");
-                int categorie =  rs.getInt("Categorie");
-                int salaire = rs.getInt("Salaire");
-                System.out.println("Nom: " + nom + "   Catégorie: " + categorie + "   Salaire: " + salaire);
-            }
-            System.out.println(ligne);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * ferme la connextion à la base de données
