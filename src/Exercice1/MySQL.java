@@ -117,7 +117,7 @@ public class MySQL {
             // parcours des résultats
             int idPromu = 0, categorie = 0;
             String nom = "";
-            while (rs.next()) {
+            if (rs.first()) {
                 idPromu = rs.getInt("Id");
                 nom = rs.getString("Nom");
                 categorie =  rs.getInt("Categorie");
