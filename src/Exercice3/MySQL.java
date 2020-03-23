@@ -11,7 +11,7 @@ public class MySQL {
     private Statement st;
 
     //pas besoin de préciser le port
-    private String url = "jdbc:mysql://localhost/Hoc-act5-exo3"; // url de la base
+    private String url = "jdbc:mysql://localhost/Hoc-act5-exo1"; // url de la base
     private String login = "root"; // login de connexion à la base
     private String pwd = ""; // mot de passe de connexion à la base
 

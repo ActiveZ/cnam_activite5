@@ -2,6 +2,7 @@ package Validation5;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Menu {
@@ -10,6 +11,11 @@ public class Menu {
     private String fichierMatiere = "";
     private Scanner sc = new Scanner(System.in);
     private String ligne = "----------------------------------------------";
+
+
+    // créer la connexion
+    MySQL bdd = new MySQL();
+
 
     // Acquisition des fichiers CSV de l'utilisateur et vérification validité
     private String acquisitionFichier() {
@@ -28,7 +34,7 @@ public class Menu {
         return ""; // si annulation
     }
 
-    public void menuGeneral() {
+    public void menuGeneral() throws FileNotFoundException {
         do {
             System.out.println("1: Charger le fichier des élèves" + (fichierEleve.isEmpty() ? "": ": chargé"));
             System.out.println("2: Charger le fichier des notes"+ (fichierNote.isEmpty() ? "": ": chargé"));
@@ -44,6 +50,7 @@ public class Menu {
             switch (Integer.valueOf(choix)) {
                 case 1: // saisie fichier CSV élèves
                     fichierEleve = acquisitionFichier();
+                    bdd.creerTableEleves(fichierEleve);
                     break;
                 case 2: // saisie fichier CSV notes
                     fichierNote = acquisitionFichier();
@@ -59,9 +66,13 @@ public class Menu {
                     }
                     break;
                 case 5: // fin programme
+                    // fermer la connexion
+                    bdd.close();
                     System.exit(0);
                     break;
                 default: //erreur inconnue
+                    // fermer la connexion
+                    bdd.close();
                     System.exit(1);
                     break;
             }
