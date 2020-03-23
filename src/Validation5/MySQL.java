@@ -53,12 +53,18 @@ public class MySQL {
         }
     }
 
-    public void creerTableEleves (String fEleves) throws FileNotFoundException {
+    public void creerTableEleves (String fEleves) { // id, nom, prenom
         //destruction de l'ancienne table
         detruireTable("eleves");
 
         //création de la table
-        String sql = "CREATE TABLE eleves ( `id` INT NOT NULL, `nom` VARCHAR (200) NOT NULL, `prenom` VARCHAR(200) NOT NULL, PRIMARY KEY(`id`)) ENGINE = MyISAM;";
+        //okString sql = "CREATE TABLE eleves ( `id` INT NOT NULL, `nom` VARCHAR (200) NOT NULL, `prenom` VARCHAR(200) NOT NULL, PRIMARY KEY(`id`)) ENGINE = MyISAM;";
+        String sql = "CREATE TABLE eleves" +
+                " ( id INT NOT NULL, " +
+                "nom VARCHAR (200) NOT NULL, " +
+                "prenom VARCHAR(200) NOT NULL, " +
+                "PRIMARY KEY(id)) " +
+                "ENGINE = MyISAM;";
         try {
             // exécute la requête
            st.executeUpdate(sql);
@@ -66,20 +72,25 @@ public class MySQL {
             e.printStackTrace();
         }
 
-        //remplissage de la table
-        File f = new File(fEleves);
-        Scanner sc = new Scanner(f);
-        sc.nextLine(); // on saute la 1 ere ligne = nom colonnes
-        sql = "INSERT INTO eleves (`id`, `nom`, `prenom`) VALUES ";
-        // lecture de chaque ligne du fichier
-        while (sc.hasNextLine()) {
-            String line = sc.nextLine();
-            sql += "('" + line + "'), ";
+        try {
+            //remplissage de la table
+            File f = new File(fEleves);
+            Scanner sc = new Scanner(f);
+            sc.nextLine(); // on saute la 1 ere ligne = nom colonnes
+            sql = "INSERT INTO eleves (id, nom, prenom) VALUES ";
+            // lecture de chaque ligne du fichier
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                sql += "('" + line + "'), ";
+            }
+            sc.close();
+            sql = sql.replaceAll(";", "' ,'");
+            sql = sql.substring(0, sql.length() - 2) + ";";
+            //System.out.println(sql);
+        } catch (FileNotFoundException e){
+            System.out.println("ERREUR lecture CSV");
+            e.printStackTrace();
         }
-        sc.close();
-        sql = sql.replaceAll(";","' ,'");
-        sql = sql.substring(0,sql.length()-2) + ";";
-        //System.out.println(sql);
 
         try {
             // exécute la requête
@@ -89,26 +100,99 @@ public class MySQL {
         }
     }
 
+    public void creerTableNotes(String fNotes) { //id, idEleve, idMatiere, note
+        //destruction de l'ancienne table
+        detruireTable("notes");
 
-
-    /**
-     * Calcul des impôts selon les requêtes sql adaptées aux tables
-     */
-    public double calculImpots(String sql) {
+        //création de la table
+        String sql = "CREATE TABLE notes" +
+                " (id INT NOT NULL," +
+                " idEleve INT NOT NULL," +
+                " idMatiere INT NOT NULL," +
+                " note DOUBLE NOT NULL," +
+                " PRIMARY KEY(id))" +
+                " ENGINE = MyISAM;";
         try {
             // exécute la requête
-            ResultSet rs = st.executeQuery(sql);
-            double result=0;
-            if (rs.first()) {
-                result = rs.getDouble("impot");
-            }
-            return result;
+            st.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 0;
+
+        try {
+            //remplissage de la table
+            File f = new File(fNotes);
+            Scanner sc = new Scanner(f);
+            sc.nextLine(); // on saute la 1 ere ligne = nom colonnes
+            sql = "INSERT INTO notes (id, idEleve, idMatiere, note) VALUES ";
+            // lecture de chaque ligne du fichier
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                sql += "(" + line + "), ";
+            }
+            sc.close();
+            sql = sql.replaceAll(";", "' ,'");
+            sql = sql.substring(0, sql.length() - 2) + ";";
+            //System.out.println(sql);
+        } catch (FileNotFoundException e){
+            System.out.println("ERREUR lecture CSV");
+            e.printStackTrace();
+        }
+
+        try {
+            // exécute la requête
+            st.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
+    public void creerTableMatieres(String fMatieres) {
+        //destruction de l'ancienne table
+        detruireTable("matieres");
+
+        //création de la table
+        String sql = "CREATE TABLE matieres" +
+                " (id INT NOT NULL," +
+                " nom VARCHAR (200) NOT NULL," +
+                " coef DOUBLE NOT NULL," +
+                " PRIMARY KEY(id))" +
+                " ENGINE = MyISAM;";
+        try {
+            // exécute la requête
+            st.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            //remplissage de la table
+            File f = new File(fMatieres);
+            Scanner sc = new Scanner(f);
+            sc.nextLine(); // on saute la 1 ere ligne = nom colonnes
+            sql = "INSERT INTO matieres (id, nom, coef) VALUES ";
+            // lecture de chaque ligne du fichier
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                sql += "('" + line + "'), ";
+            }
+            sc.close();
+            sql = sql.replaceAll(";", "' ,'");
+            sql = sql.substring(0, sql.length() - 2) + ";";
+            //System.out.println(sql);
+        } catch (FileNotFoundException e){
+            System.out.println("ERREUR lecture CSV");
+            e.printStackTrace();
+        }
+
+        try {
+            // exécute la requête
+            st.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * ferme la connextion à la base de données

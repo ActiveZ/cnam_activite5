@@ -2,7 +2,6 @@ package Validation5;
 
 import javax.swing.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Menu {
@@ -34,7 +33,7 @@ public class Menu {
         return ""; // si annulation
     }
 
-    public void menuGeneral() throws FileNotFoundException {
+    public void menuGeneral() {
         do {
             System.out.println("1: Charger le fichier des élèves" + (fichierEleve.isEmpty() ? "": ": chargé"));
             System.out.println("2: Charger le fichier des notes"+ (fichierNote.isEmpty() ? "": ": chargé"));
@@ -54,9 +53,11 @@ public class Menu {
                     break;
                 case 2: // saisie fichier CSV notes
                     fichierNote = acquisitionFichier();
+                    bdd.creerTableNotes(fichierNote);
                     break;
                 case 3: // saisie fichier CSV matières
                     fichierMatiere = acquisitionFichier();
+                    bdd.creerTableMatieres(fichierMatiere);
                     break;
                 case 4: // calcul moyenne
                     if (fichierMatiere.isEmpty() || fichierNote.isEmpty() || fichierEleve.isEmpty()) {
