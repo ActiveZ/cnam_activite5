@@ -80,3 +80,6 @@ public class Menu {
         } while (true);
     }
 }
+
+//req moy generale par eleve
+//SELECT eleves.id, eleves.nom, eleves.prenom, FORMAT(SUM(notes.note*matieres.coef) / SUM(matieres.coef),2) AS "moyenne" FROM eleves, notes, matieres WHERE eleves.id=notes.idEleve AND notes.idMatiere=matieres.id GROUP BY eleves.id

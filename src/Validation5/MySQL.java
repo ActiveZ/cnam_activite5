@@ -128,7 +128,7 @@ public class MySQL {
             // lecture de chaque ligne du fichier
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
-                sql += "(" + line + "), ";
+                sql += "('" + line + "'), ";
             }
             sc.close();
             sql = sql.replaceAll(";", "' ,'");
@@ -145,7 +145,6 @@ public class MySQL {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public void creerTableMatieres(String fMatieres) {
