@@ -19,6 +19,7 @@ public class MySQL {
     private String url = "jdbc:mysql://localhost/" + nomBdd; // url de la base
     private String login = "root"; // login de connexion à la base
     private String pwd = ""; // mot de passe de connexion à la base
+    private String ligne = "----------------------------------------------------";
 
     // ---------------------------------------
     // ---------- Constructeurs --------------
@@ -46,7 +47,7 @@ public class MySQL {
     private void detruireTable(String table) {
         String sql = "DROP TABLE IF EXISTS " + table;
         try {
-            // exécute la requête
+            // exécute la requête de destruction
             st.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -58,7 +59,6 @@ public class MySQL {
         detruireTable("eleves");
 
         //création de la table
-        //okString sql = "CREATE TABLE eleves ( `id` INT NOT NULL, `nom` VARCHAR (200) NOT NULL, `prenom` VARCHAR(200) NOT NULL, PRIMARY KEY(`id`)) ENGINE = MyISAM;";
         String sql = "CREATE TABLE eleves" +
                 " ( id INT NOT NULL, " +
                 "nom VARCHAR (200) NOT NULL, " +
@@ -66,7 +66,7 @@ public class MySQL {
                 "PRIMARY KEY(id)) " +
                 "ENGINE = MyISAM;";
         try {
-            // exécute la requête
+            // exécute la requête de création de table
            st.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,14 +86,13 @@ public class MySQL {
             sc.close();
             sql = sql.replaceAll(";", "' ,'");
             sql = sql.substring(0, sql.length() - 2) + ";";
-            //System.out.println(sql);
         } catch (FileNotFoundException e){
             System.out.println("ERREUR lecture CSV");
             e.printStackTrace();
         }
 
         try {
-            // exécute la requête
+            // exécute la requête de remplissage
             st.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -113,14 +112,14 @@ public class MySQL {
                 " PRIMARY KEY(id))" +
                 " ENGINE = MyISAM;";
         try {
-            // exécute la requête
+            // exécute la requête création de table
             st.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         try {
-            //remplissage de la table
+            // création de la requête de remplissage de la table
             File f = new File(fNotes);
             Scanner sc = new Scanner(f);
             sc.nextLine(); // on saute la 1 ere ligne = nom colonnes
@@ -133,14 +132,13 @@ public class MySQL {
             sc.close();
             sql = sql.replaceAll(";", "' ,'");
             sql = sql.substring(0, sql.length() - 2) + ";";
-            //System.out.println(sql);
         } catch (FileNotFoundException e){
             System.out.println("ERREUR lecture CSV");
             e.printStackTrace();
         }
 
         try {
-            // exécute la requête
+            // exécute la requête de remplissage
             st.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -159,7 +157,7 @@ public class MySQL {
                 " PRIMARY KEY(id))" +
                 " ENGINE = MyISAM;";
         try {
-            // exécute la requête
+            // exécute la requête de création de table
             st.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -179,7 +177,6 @@ public class MySQL {
             sc.close();
             sql = sql.replaceAll(";", "' ,'");
             sql = sql.substring(0, sql.length() - 2) + ";";
-            //System.out.println(sql);
         } catch (FileNotFoundException e){
             System.out.println("ERREUR lecture CSV");
             e.printStackTrace();
@@ -192,6 +189,33 @@ public class MySQL {
             e.printStackTrace();
         }
     }
+
+    //calcul de la moyenne générale pondérée de chaque élève et affichage
+    public void calculMoyenne() {
+        String sql = "SELECT eleves.id, eleves.nom, eleves.prenom, FORMAT(SUM(notes.note*matieres.coef) / SUM(matieres.coef),2) AS 'moyenne'" +
+                " FROM eleves, notes, matieres " +
+                "WHERE eleves.id=notes.idEleve " +
+                "AND notes.idMatiere=matieres.id " +
+                "GROUP BY eleves.id";
+        try {
+            // exécute la requête
+            ResultSet rs = st.executeQuery(sql);
+            // parcours des résultats et affichage de chaque ligne calculée par la requête
+            System.out.println(ligne);
+            System.out.println("Moyenne de chaque élève:");
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nom = rs.getString("nom");
+                String prenom =  rs.getString("prenom");
+                Double moyenne = rs.getDouble("moyenne");
+                System.out.println("Id:" + id + "   Nom: " + nom + "   Prénom: " + prenom + "   Moyenne: " + moyenne);
+            }
+            System.out.println(ligne);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * ferme la connextion à la base de données

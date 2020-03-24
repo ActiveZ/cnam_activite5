@@ -60,11 +60,11 @@ public class Menu {
                     bdd.creerTableMatieres(fichierMatiere);
                     break;
                 case 4: // calcul moyenne
-                    if (fichierMatiere.isEmpty() || fichierNote.isEmpty() || fichierEleve.isEmpty()) {
-                        System.out.println("ERREUR: Il manque des fichiers" + "\n" + ligne);
-                    } else {
-
-                    }
+//                    if (fichierMatiere.isEmpty() || fichierNote.isEmpty() || fichierEleve.isEmpty()) {
+//                        System.out.println("ERREUR: Il manque des fichiers" + "\n" + ligne);
+//                    } else {
+                    bdd.calculMoyenne();
+//                    }
                     break;
                 case 5: // fin programme
                     // fermer la connexion
@@ -83,3 +83,5 @@ public class Menu {
 
 //req moy generale par eleve
 //SELECT eleves.id, eleves.nom, eleves.prenom, FORMAT(SUM(notes.note*matieres.coef) / SUM(matieres.coef),2) AS "moyenne" FROM eleves, notes, matieres WHERE eleves.id=notes.idEleve AND notes.idMatiere=matieres.id GROUP BY eleves.id
+//idem avec moyenne de la classe
+//SELECT eleves.id, eleves.nom, eleves.prenom, FORMAT(SUM(notes.note*matieres.coef) / SUM(matieres.coef),2) AS "moyenne", (SELECT FORMAT((SUM(notes.note*matieres.coef) / SUM(matieres.coef)),2) FROM eleves, notes, matieres WHERE eleves.id=notes.idEleve AND notes.idMatiere=matieres.id) AS "Moy classe" FROM eleves, notes, matieres WHERE eleves.id=notes.idEleve AND notes.idMatiere=matieres.id GROUP BY eleves.id
