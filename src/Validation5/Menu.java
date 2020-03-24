@@ -9,7 +9,7 @@ public class Menu {
     private String fichierNote = "";
     private String fichierMatiere = "";
     private Scanner sc = new Scanner(System.in);
-    private String ligne = "----------------------------------------------";
+    //private String ligne = "----------------------------------------------";
 
 
     // créer la connexion
@@ -81,7 +81,12 @@ public class Menu {
     }
 }
 
+/**
+ * memento des requêtes sql
+ */
 //req moy generale par eleve
 //SELECT eleves.id, eleves.nom, eleves.prenom, FORMAT(SUM(notes.note*matieres.coef) / SUM(matieres.coef),2) AS "moyenne" FROM eleves, notes, matieres WHERE eleves.id=notes.idEleve AND notes.idMatiere=matieres.id GROUP BY eleves.id
 //idem avec moyenne de la classe
 //SELECT eleves.id, eleves.nom, eleves.prenom, FORMAT(SUM(notes.note*matieres.coef) / SUM(matieres.coef),2) AS "moyenne", (SELECT FORMAT((SUM(notes.note*matieres.coef) / SUM(matieres.coef)),2) FROM eleves, notes, matieres WHERE eleves.id=notes.idEleve AND notes.idMatiere=matieres.id) AS "Moy classe" FROM eleves, notes, matieres WHERE eleves.id=notes.idEleve AND notes.idMatiere=matieres.id GROUP BY eleves.id
+//moy de la classe seule:
+//SELECT FORMAT((SUM(notes.note*matieres.coef) / SUM(matieres.coef)),2) AS "Moy classe" FROM eleves, notes, matieres WHERE eleves.id=notes.idEleve AND notes.idMatiere=matieres.id

@@ -15,7 +15,7 @@ public class MySQL {
     private Connection ct;
     private Statement st;
 
-    private final String nomBdd = "Hoc-act5-validation";
+    private final String nomBdd = "Hoc-act5-validation"; // nom de la bdd
     private String url = "jdbc:mysql://localhost/" + nomBdd; // url de la base
     private String login = "root"; // login de connexion à la base
     private String pwd = ""; // mot de passe de connexion à la base
@@ -44,6 +44,10 @@ public class MySQL {
     // --------------- Méthodes --------------
     // ---------------------------------------
 
+    /**
+     * Destruction (drop) de la table dans la bdd
+     * @param table: table à droper
+     */
     private void detruireTable(String table) {
         String sql = "DROP TABLE IF EXISTS " + table;
         try {
@@ -54,6 +58,10 @@ public class MySQL {
         }
     }
 
+    /**
+     * Création de la table "eleves" à partir du fichier CSV
+     * @param fEleves: fichier CSV
+     */
     public void creerTableEleves (String fEleves) { // id, nom, prenom
         //destruction de l'ancienne table
         detruireTable("eleves");
@@ -99,6 +107,10 @@ public class MySQL {
         }
     }
 
+    /**
+     * Création de la table "notes" à partir du fichier CSV
+     * @param fNotes: fichier CSV
+     */
     public void creerTableNotes(String fNotes) { //id, idEleve, idMatiere, note
         //destruction de l'ancienne table
         detruireTable("notes");
@@ -145,7 +157,11 @@ public class MySQL {
         }
     }
 
-    public void creerTableMatieres(String fMatieres) {
+    /**
+     * Création de la table "matieres" à partir du fichier CSV
+     * @param fMatieres: fichier CSV
+     */
+    public void creerTableMatieres(String fMatieres) { //id, nom, coef
         //destruction de l'ancienne table
         detruireTable("matieres");
 
@@ -190,7 +206,9 @@ public class MySQL {
         }
     }
 
-    //calcul de la moyenne générale pondérée de chaque élève et affichage
+    /**
+     * calcul de la moyenne générale pondérée de chaque élève et affichage
+     */
     public void calculMoyenne() {
         String sql = "SELECT eleves.id, eleves.nom, eleves.prenom, FORMAT(SUM(notes.note*matieres.coef) / SUM(matieres.coef),2) AS 'moyenne'" +
                 " FROM eleves, notes, matieres " +
