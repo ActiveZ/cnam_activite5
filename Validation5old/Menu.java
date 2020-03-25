@@ -14,9 +14,6 @@ public class Menu {
 
     // créer la connexion
     MySQL bdd = new MySQL();
-    DAO<Eleve> eleveDAO = new EleveDAO(bdd.ct);
-
-
 
     // Acquisition des fichiers CSV de l'utilisateur et vérification validité
     private String acquisitionFichier() {

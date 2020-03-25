@@ -12,7 +12,7 @@ public class MySQL {
     // ---------------------------------------
     private final String SEPARATEUR = ";"; // séparateur de colonnes des fichiers CSV
 
-    public Connection ct;
+    private Connection ct;
     private Statement st;
 
     private final String nomBdd = "Hoc-act5-validation"; // nom de la bdd
