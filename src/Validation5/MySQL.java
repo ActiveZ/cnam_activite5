@@ -12,7 +12,7 @@ public class MySQL {
     // ---------------------------------------
     private final String SEPARATEUR = ";"; // séparateur de colonnes des fichiers CSV
 
-    public Connection ct;
+    private Connection ct;
     private Statement st;
 
     private final String nomBdd = "Hoc-act5-validation"; // nom de la bdd
@@ -224,16 +224,29 @@ public class MySQL {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String nom = rs.getString("nom");
-                String prenom =  rs.getString("prenom");
+                String prenom = rs.getString("prenom");
                 Double moyenne = rs.getDouble("moyenne");
                 System.out.println("Id:" + id + "   Nom: " + nom + "   Prénom: " + prenom + "   Moyenne: " + moyenne);
             }
-            System.out.println(ligne);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //BONUS: Calcul de la moyenne générale de la classe
+        try {
+            sql = "SELECT FORMAT((SUM(notes.note*matieres.coef) / SUM(matieres.coef)),2) AS 'moy_classe' " +
+                    "FROM eleves, notes, matieres " +
+                    "WHERE eleves.id=notes.idEleve " +
+                    "AND notes.idMatiere=matieres.id";
+            // exécute la requête
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.first()) {
+                System.out.println("Moyenne de la classe: " + rs.getString("moy_classe") + "\n" + ligne);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
 
     /**
      * ferme la connextion à la base de données

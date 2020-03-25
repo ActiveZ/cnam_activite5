@@ -1,4 +1,4 @@
-package Validation5;
+package Validation5DAO;
 
 import java.sql.Connection;
 
@@ -46,5 +46,5 @@ public abstract class DAO<T> {
      * @return T l'objet trouvé
      */
     public abstract T find(int id);
-}
 
+}

@@ -1,4 +1,4 @@
-package Validation5;
+package Validation5DAO;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,8 +12,8 @@ public class MySQL {
     // ---------------------------------------
     private final String SEPARATEUR = ";"; // séparateur de colonnes des fichiers CSV
 
-    private Connection ct;
-    private Statement st;
+    public static Connection ct;
+    public static Statement st;
 
     private final String nomBdd = "Hoc-act5-validation"; // nom de la bdd
     private String url = "jdbc:mysql://localhost/" + nomBdd; // url de la base
@@ -48,7 +48,7 @@ public class MySQL {
      * Destruction (drop) de la table dans la bdd
      * @param table: table à droper
      */
-    private void detruireTable(String table) {
+    public static void detruireTable(String table) {
         String sql = "DROP TABLE IF EXISTS " + table;
         try {
             // exécute la requête de destruction
@@ -58,54 +58,54 @@ public class MySQL {
         }
     }
 
-    /**
-     * Création de la table "eleves" à partir du fichier CSV
-     * @param fEleves: fichier CSV
-     */
-    public void creerTableEleves (String fEleves) { // id, nom, prenom
-        //destruction de l'ancienne table
-        detruireTable("eleves");
-
-        //création de la table
-        String sql = "CREATE TABLE eleves" +
-                " ( id INT NOT NULL, " +
-                "nom VARCHAR (200) NOT NULL, " +
-                "prenom VARCHAR(200) NOT NULL, " +
-                "PRIMARY KEY(id)) " +
-                "ENGINE = MyISAM;";
-        try {
-            // exécute la requête de création de table
-           st.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            //remplissage de la table
-            File f = new File(fEleves);
-            Scanner sc = new Scanner(f);
-            sc.nextLine(); // on saute la 1 ere ligne = nom colonnes
-            sql = "INSERT INTO eleves (id, nom, prenom) VALUES ";
-            // lecture de chaque ligne du fichier
-            while (sc.hasNextLine()) {
-                String line = sc.nextLine();
-                sql += "('" + line + "'), ";
-            }
-            sc.close();
-            sql = sql.replaceAll(";", "' ,'");
-            sql = sql.substring(0, sql.length() - 2) + ";";
-        } catch (FileNotFoundException e){
-            System.out.println("ERREUR lecture CSV");
-            e.printStackTrace();
-        }
-
-        try {
-            // exécute la requête de remplissage
-            st.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    /**
+//     * Création de la table "eleves" à partir du fichier CSV
+//     * @param fEleves: fichier CSV
+//     */
+//    public void creerTableEleves (String fEleves) { // id, nom, prenom
+//        //destruction de l'ancienne table
+//        detruireTable("eleves");
+//
+//        //création de la table
+//        String sql = "CREATE TABLE eleves" +
+//                " ( id INT NOT NULL, " +
+//                "nom VARCHAR (200) NOT NULL, " +
+//                "prenom VARCHAR(200) NOT NULL, " +
+//                "PRIMARY KEY(id)) " +
+//                "ENGINE = MyISAM;";
+//        try {
+//            // exécute la requête de création de table
+//           st.executeUpdate(sql);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        try {
+//            //remplissage de la table
+//            File f = new File(fEleves);
+//            Scanner sc = new Scanner(f);
+//            sc.nextLine(); // on saute la 1 ere ligne = nom colonnes
+//            sql = "INSERT INTO eleves (id, nom, prenom) VALUES ";
+//            // lecture de chaque ligne du fichier
+//            while (sc.hasNextLine()) {
+//                String line = sc.nextLine();
+//                sql += "('" + line + "'), ";
+//            }
+//            sc.close();
+//            sql = sql.replaceAll(";", "' ,'");
+//            sql = sql.substring(0, sql.length() - 2) + ";";
+//        } catch (FileNotFoundException e){
+//            System.out.println("ERREUR lecture CSV");
+//            e.printStackTrace();
+//        }
+//
+//        try {
+//            // exécute la requête de remplissage
+//            st.executeUpdate(sql);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * Création de la table "notes" à partir du fichier CSV
@@ -238,7 +238,7 @@ public class MySQL {
     /**
      * ferme la connextion à la base de données
      */
-    public void close() {
+    public static void close() {
         try {
             ct.close();
             st.close();

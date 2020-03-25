@@ -1,13 +1,13 @@
-package Validation5;
+package Validation5DAO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class EleveDAO extends DAO<Eleve> {
+public class NoteDAO extends DAO<Note> {
     private Statement st;
 
-    public EleveDAO(Connection conn) {
+    public NoteDAO(Connection conn) {
         super(conn);
         try {
             st = conn.createStatement();
@@ -18,22 +18,22 @@ public class EleveDAO extends DAO<Eleve> {
     }
 
     @Override
-    public boolean create(Eleve obj) {
+    public boolean create(Note obj) {
         return false;
     }
 
     @Override
-    public boolean delete(Eleve obj) {
+    public boolean delete(Note obj) {
         return false;
     }
 
     @Override
-    public boolean update(Eleve obj) {
+    public boolean update(Note obj) {
         return false;
     }
 
     @Override
-    public Eleve find(int id) {
+    public Note find(int id) {
         return null;
     }
 

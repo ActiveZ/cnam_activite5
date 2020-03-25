@@ -1,4 +1,4 @@
-package Validation5;
+package Validation5DAO;
 
 import javax.swing.*;
 import java.io.File;
@@ -14,6 +14,9 @@ public class Menu {
 
     // créer la connexion
     MySQL bdd = new MySQL();
+    EleveDAO eleveDAO = new EleveDAO(MySQL.ct);
+
+
 
     // Acquisition des fichiers CSV de l'utilisateur et vérification validité
     private String acquisitionFichier() {
@@ -48,7 +51,8 @@ public class Menu {
             switch (Integer.valueOf(choix)) {
                 case 1: // saisie fichier CSV élèves
                     fichierEleve = acquisitionFichier();
-                    bdd.creerTableEleves(fichierEleve);
+                    //bdd.creerTableEleves(fichierEleve);
+                    eleveDAO.creerTableEleves(fichierEleve);
                     break;
                 case 2: // saisie fichier CSV notes
                     fichierNote = acquisitionFichier();

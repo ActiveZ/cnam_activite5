@@ -1,4 +1,4 @@
-package Validation5;
+package Validation5.dao;
 
 import java.sql.Connection;
 
