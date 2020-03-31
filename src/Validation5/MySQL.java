@@ -16,7 +16,9 @@ public class MySQL {
     private Statement st;
 
     private final String nomBdd = "Hoc-act5-validation"; // nom de la bdd
-    private String url = "jdbc:mysql://localhost/" + nomBdd; // url de la base
+    private String url = "jdbc:mysql://localhost/" + nomBdd + "?useUnicode=true" +
+            "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&" +
+            "serverTimezone=UTC"; // url de la base
     private String login = "root"; // login de connexion à la base
     private String pwd = ""; // mot de passe de connexion à la base
     private String ligne = "----------------------------------------------------";
@@ -249,7 +251,7 @@ public class MySQL {
     }
 
     /**
-     * ferme la connextion à la base de données
+     * ferme la connexion à la base de données
      */
     public void close() {
         try {
