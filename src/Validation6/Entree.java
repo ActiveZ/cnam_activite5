@@ -1,17 +1,19 @@
 package Validation6;
 
+import java.util.TreeSet;
+
 public class Entree implements Comparable<Entree> {
-    private String texte;
-    private int page;
+    public String texte;
+    public TreeSet <Integer> page = new TreeSet<>() ;
 
     public Entree(String texte, int page) {
         this.texte = texte;
-        this.page = page;
+        this.page.add(page);
     }
 
     @Override
     public String toString() {
-        return (texte + " " + page);
+        return (texte + " ") + (page);
     }
 
     @Override
