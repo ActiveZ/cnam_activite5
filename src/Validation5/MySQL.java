@@ -10,36 +10,17 @@ public class MySQL {
     // ---------------------------------------
     // ---------- Attributs ------------------
     // ---------------------------------------
+
     private final String SEPARATEUR = ";"; // séparateur de colonnes des fichiers CSV
-
-    private Connection ct;
     private Statement st;
-
-    private final String nomBdd = "Hoc-act5-validation"; // nom de la bdd
-    private String url = "jdbc:mysql://localhost/" + nomBdd + "?useUnicode=true" +
-            "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&" +
-            "serverTimezone=UTC"; // url de la base
-    private String login = "root"; // login de connexion à la base
-    private String pwd = ""; // mot de passe de connexion à la base
     private String ligne = "----------------------------------------------------";
 
     // ---------------------------------------
     // ---------- Constructeurs --------------
     // ---------------------------------------
 
-    public MySQL() {
-        try {
-            // Chargement du driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            // Récupération de la connexion
-            ct = DriverManager.getConnection(url,login,pwd);
-            // Création d'un statement
-            st = ct.createStatement();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public MySQL (Connexion conn){
+         this.st = conn.st;
     }
 
     // ---------------------------------------
@@ -245,18 +226,6 @@ public class MySQL {
             if (rs.first()) {
                 System.out.println("Moyenne de la classe: " + rs.getString("moy_classe") + "\n" + ligne);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * ferme la connexion à la base de données
-     */
-    public void close() {
-        try {
-            ct.close();
-            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

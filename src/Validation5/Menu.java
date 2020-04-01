@@ -12,7 +12,10 @@ public class Menu {
 
 
     // créer la connexion
-    MySQL bdd = new MySQL();
+    Connexion connexion = new Connexion();
+
+    // créer la gestion de la bdd
+    MySQL bdd = new MySQL(connexion);
 
     /**
      * Acquisition des fichiers CSV de l'utilisateur par boite de dialogue
@@ -69,12 +72,12 @@ public class Menu {
                     break;
                 case 5: // fin programme
                     // fermer la connexion
-                    bdd.close();
+                    connexion.close();
                     System.exit(0);
                     break;
                 default: //erreur inconnue
                     // fermer la connexion
-                    bdd.close();
+                    connexion.close();
                     System.exit(1);
                     break;
             }
